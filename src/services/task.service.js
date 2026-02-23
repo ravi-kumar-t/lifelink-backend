@@ -1,5 +1,6 @@
 const Task = require("../models/task.model");
 const Project = require("../models/project.model");
+const AppError = require("../utils/AppError");
 
 exports.respondToProject = async (projectId, donorId) => {
   const project = await Project.findById(projectId);
@@ -38,7 +39,7 @@ exports.updateTaskStatus = async (taskId, status, adminId) => {
   const task = await Task.findById(taskId);
 
   if (!task) {
-    throw new Error("Response not found");
+    throw new AppError("Response not found", 404);
   }
 
   task.status = status;

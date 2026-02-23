@@ -4,6 +4,7 @@ const cors = require("cors");
 const rateLimit = require("express-rate-limit");
 const mongoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
+const errorHandler = require("./middlewares/error.middleware");
 
 const app = express();
 
@@ -38,19 +39,9 @@ app.use("/api/projects", projectRoutes);
 app.use("/api/tasks", taskRoutes);
 
 app.get("/", (req, res) => {
-  res.send("LifeLink API Running Securely");
+  res.status(200).send("LifeLink API Running Securely");
 });
 
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-
-  res.status(500).json({
-    message: "Something went wrong",
-    error:
-      process.env.NODE_ENV === "development"
-        ? err.message
-        : undefined
-  });
-});
+app.use(errorHandler);
 
 module.exports = app;

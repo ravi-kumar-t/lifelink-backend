@@ -11,17 +11,16 @@ app.use(helmet());
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "*",
+    origin: process.env.FRONTEND_URL || "http://localhost:3000",
     credentials: true
   })
 );
 
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
+  windowMs: 15 * 60 * 1000, 
+  max: 100, 
   message: "Too many requests from this IP, please try again later."
 });
-
 app.use("/api", limiter);
 
 app.use(express.json());
@@ -44,9 +43,13 @@ app.get("/", (req, res) => {
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
+
   res.status(500).json({
     message: "Something went wrong",
-    error: process.env.NODE_ENV === "development" ? err.message : undefined
+    error:
+      process.env.NODE_ENV === "development"
+        ? err.message
+        : undefined
   });
 });
 

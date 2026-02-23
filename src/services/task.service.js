@@ -34,15 +34,11 @@ exports.getResponsesForProject = async (projectId) => {
     .populate("verifiedBy", "name email");
 };
 
-exports.updateTaskStatus = async (taskId, status, adminId, userRole) => {
+exports.updateTaskStatus = async (taskId, status, adminId) => {
   const task = await Task.findById(taskId);
 
   if (!task) {
     throw new Error("Response not found");
-  }
-
-  if (userRole !== "Admin") {
-    throw new Error("Only admin can update response status");
   }
 
   task.status = status;

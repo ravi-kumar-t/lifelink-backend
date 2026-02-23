@@ -3,6 +3,7 @@ const router = express.Router();
 
 const taskController = require("../controllers/task.controller");
 const protect = require("../middlewares/auth.middleware");
+const { adminOnly } = require("../middlewares/role.middleware");
 const validate = require("../middlewares/validation.middleware");
 
 const {
@@ -27,6 +28,7 @@ router.get(
 router.patch(
   "/:id/status",
   protect,
+  adminOnly,
   taskIdValidation,
   validate,
   taskController.updateTaskStatus

@@ -29,18 +29,14 @@ exports.getProjectById = async (id) => {
   return project;
 };
 
-exports.closeProject = async (id, userRole) => {
+exports.closeProject = async (id) => {
   const project = await Project.findById(id);
 
   if (!project) {
     throw new Error("Project not found");
   }
-
-  if (userRole !== "Admin") {
-    throw new Error("Only admin can close emergency cases");
-  }
-
   project.status = "Closed";
+
   await project.save();
 
   return project;

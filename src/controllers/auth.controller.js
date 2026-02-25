@@ -17,3 +17,11 @@ exports.login = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+
+exports.getCurrentUser = async (req, res, next) => {
+  try {
+    res.status(200).json(req.user);
+  } catch (error) {
+    next(error);
+  }
+};

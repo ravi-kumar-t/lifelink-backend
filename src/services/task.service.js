@@ -31,7 +31,7 @@ exports.respondToProject = async (projectId, donorId) => {
 
 exports.getResponsesForProject = async (projectId) => {
   return await Task.find({ projectId })
-    .populate("donorId", "name email bloodGroup")
+    .populate("donorId", "name email phone bloodGroup city")
     .populate("verifiedBy", "name email");
 };
 

@@ -22,6 +22,7 @@ exports.getAllProjects = async (currentUserId = null) => {
       const obj = project.toObject();
       obj.responseCount = count;
 
+      // Check if current user already responded — fixes reload bug
       if (currentUserId) {
         const existing = await Task.findOne({
           projectId: project._id,
